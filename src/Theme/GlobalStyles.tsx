@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
-import { normalize } from "./_normalize";
-import { reset } from "./_reset";
+import { normalize } from "./normalize";
+import { reset } from "./reset";
 
 const GlobalStyles = createGlobalStyle`
   @font-face {

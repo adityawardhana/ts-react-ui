@@ -1,5 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { Button, AlertBox } from "./components";
 
 function App() {
   return (
@@ -17,6 +18,11 @@ function App() {
         >
           Learn React
         </a>
+
+        <Button>Test</Button>
+        <AlertBox isOpen title="Alert Header" toggle={() => {}}>
+          Body Text Notification
+        </AlertBox>
       </header>
     </div>
   );

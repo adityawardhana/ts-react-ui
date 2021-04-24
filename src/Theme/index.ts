@@ -1,11 +1,11 @@
-import * as themeBase from "./_variable";
+import GlobalStyles from "./GlobalStyles";
+import { ThemeObjectProps } from "./types";
+import * as themeBase from "./variable";
 
-interface ITheme {
-  [key: string]: any
-}
-const theme: ITheme = {
-  ...themeBase.colorAll,
+const theme: ThemeObjectProps = {
+  ...themeBase.colors,
   ...themeBase.button,
+  ...themeBase.chips,
   ...themeBase.border,
   ...themeBase.icon,
   ...themeBase.zindex,
@@ -19,4 +19,5 @@ const theme: ITheme = {
   ...themeBase.progressTracker,
 };
 
+export { GlobalStyles };
 export default theme;

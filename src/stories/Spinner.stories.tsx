@@ -1,17 +1,10 @@
 import { Story, Meta } from "@storybook/react";
-import { Spinner, SpinnerProps } from "../Components";
+import { Spinner, SpinnerProps } from "../components";
 
 export default {
   title: "Example/Spinner",
   component: Spinner,
-  argTypes: {
-    color: {
-      control: {
-        type: "radio",
-        options: ["primary", "white", "success", "warning", "error"],
-      },
-    },
-  },
+  argTypes: {},
 } as Meta;
 
 const Template: Story<SpinnerProps> = (args) => (
@@ -21,3 +14,6 @@ const Template: Story<SpinnerProps> = (args) => (
 );
 
 export const Default = Template.bind({});
+Default.args = {
+  color: "primary",
+};

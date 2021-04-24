@@ -27,5 +27,5 @@
   "include": [
     "src"
   ],
-  "exclude": ["src/stories"]
+  "exclude": ["src/stories", "src/App*", "src/index*", "src/*.css"]
 }

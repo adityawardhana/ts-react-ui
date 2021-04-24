@@ -1,6 +1,7 @@
 import { FC } from "react";
 import styled, { keyframes } from "styled-components";
-import { position, spacing } from "../../Utils";
+import { ColorKeys } from "../../theme/types";
+import { position, spacing } from "../../utils";
 
 const Spins = keyframes`
     0% { transform: rotate(0deg); }
@@ -34,9 +35,7 @@ const SVGSpinner = styled.svg`
     fill: transparent;
     stroke: ${(props: any) =>
       props.color
-        ? props.theme.color[props.color]
-          ? props.theme.color[props.color]
-          : props.color
+        ? props.theme.color[props.color] || props.color
         : props.theme.color.primary};
     stroke-linecap: round;
     stroke-dasharray: 283;
@@ -51,7 +50,7 @@ const SVGSpinner = styled.svg`
 
 export interface SpinnerProps {
   [key: string]: any;
-  color?: string;
+  color?: ColorKeys;
 }
 
 export const Spinner: FC<SpinnerProps> = (props) => {

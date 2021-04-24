@@ -1,20 +1,22 @@
-import theme from "../Theme";
+import { css } from "styled-components";
 
-const themeColor = Object.keys(theme.color);
-
-const colorProbe = (propValue: any) => {
-  return themeColor.indexOf(propValue) !== -1
-    ? theme.color[propValue]
-    : propValue;
+const getThemeColor = (colors: any, value: any) => {
+  return Object.keys(colors).indexOf(value) > -1 ? colors[value] : value;
 };
-const borderProbe = (propValue: any) => {
-  if (propValue) {
-    let itsColor = [];
-    if (propValue === "none") return propValue;
-    itsColor = propValue.split(" ");
-    return itsColor[2]
-      ? itsColor[0] + " " + itsColor[1] + " " + colorProbe(itsColor[2])
-      : itsColor[0] + " " + itsColor[1];
+
+const getBorder = (colors: any, value: any) => {
+  if (value) {
+    if (value === "none") return value;
+    const props = value.split(" ");
+    return props[2]
+      ? `${props[0]} ${props[1]} ${getThemeColor(colors, props[2])}`
+      : `${props[0]} ${props[1]}`;
+  }
+};
+
+const getShadow = (shadows: any, value: any) => {
+  if (value) {
+    return shadows[value] || value;
   }
 };
 
@@ -25,7 +27,7 @@ export const typography = (props: any) => ({
   lineHeight: props.lineHeight,
   letterSpacing: props.letterSpacing,
   textAlign: props.textAlign,
-  fontStyle: props.fontStyle
+  fontStyle: props.fontStyle,
 });
 
 export const sizing = (props: any) => ({
@@ -46,19 +48,19 @@ export const spacing = (props: any) => ({
   margin: props.m,
   marginTop: props.mt || props.my,
   marginRight: props.mr || props.mx,
-  marginBottom: props.mb || props.mby,
-  marginLeft: props.ml || props.mx
+  marginBottom: props.mb || props.my,
+  marginLeft: props.ml || props.mx,
 });
 
 export const color = (props: any) => ({
   color:
-    Object.keys(props.theme.color).indexOf(props.color) !== -1
+    Object.keys(props.theme.color).indexOf(props.color) > -1
       ? props.theme.color[props.color]
       : props.color,
   backgroundColor:
-    Object.keys(props.theme.color).indexOf(props.bg) !== -1
+    Object.keys(props.theme.color).indexOf(props.bg) > -1
       ? props.theme.color[props.bg]
-      : props.bg
+      : props.bg,
 });
 
 export const position = (props: any) => ({
@@ -68,59 +70,64 @@ export const position = (props: any) => ({
   right: props.right,
   bottom: props.bottom,
   left: props.left,
-  transform: props.transform
+  transform: props.transform,
 });
 
 export const border = (props: any) => ({
-  border: borderProbe(props.border),
+  border: getBorder(props.theme.color, props.border),
   borderWidth: props.borderWidth,
   borderStyle: props.borderStyle,
-  borderColor: colorProbe(props.borderColor),
+  borderColor: getThemeColor(props.theme.color, props.borderColor),
   borderRadius: props.borderRadius,
-  borderTop: borderProbe(props.borderTop),
+  borderTop: getBorder(props.theme.color, props.borderTop),
   borderTopWidth: props.borderTopWidth,
   borderTopStyle: props.borderTopStyle,
-  borderTopColor: colorProbe(props.borderTopColor),
+  borderTopColor: getThemeColor(props.theme.color, props.borderTopColor),
   borderTopLeftRadius: props.borderTopLeftRadius,
   borderTopRightRadius: props.borderTopRightRadius,
-  borderRight: borderProbe(props.borderRight),
+  borderRight: getBorder(props.theme.color, props.borderRight),
   borderRightWidth: props.borderRightWidth,
   borderRightStyle: props.borderRightStyle,
-  borderRightColor: colorProbe(props.borderRightColor),
-  borderBottom: borderProbe(props.borderBottom),
+  borderRightColor: getThemeColor(props.theme.color, props.borderRightColor),
+  borderBottom: getBorder(props.theme.color, props.borderBottom),
   borderBottomWidth: props.borderBottomWidth,
   borderBottomStyle: props.borderBottomStyle,
-  borderBottomColor: colorProbe(props.borderBottomColor),
+  borderBottomColor: getThemeColor(props.theme.color, props.borderBottomColor),
   borderBottomLeftRadius: props.borderBottomLeftRadius,
   borderBottomRightRadius: props.borderBottomRightRadius,
-  borderLeft: borderProbe(props.borderLeft),
+  borderLeft: getBorder(props.theme.color, props.borderLeft),
   borderLeftWidth: props.borderLeftWidth,
   borderLeftStyle: props.borderLeftStyle,
-  borderLeftColor: colorProbe(props.borderLeftColor),
+  borderLeftColor: getThemeColor(props.theme.color, props.borderLeftColor),
   borderX: props.borderX,
-  borderY: props.borderY
+  borderY: props.borderY,
 });
 
 export const display = (props: any) => ({
   display: props.display,
-  boxShadow: props.boxShadow && (props.boxShadow.length > 0 ? props.boxShadow : theme.shadow.default),
-  visibility: props.visibility
+  visibility: props.visibility,
+});
+
+export const shadow = (props: any) => ({
+  boxShadow: getShadow(props.theme.shadow, props.boxShadow),
 });
 
 export const flexbox = (props: any) => ({
   display:
-    (props.alignItems && props.alignItems.length > 0) ||
-    (props.alignContent && props.alignContent.length > 0) ||
-    (props.justifyItems && props.justifyItems.length > 0) ||
-    (props.justifyContent && props.justifyContent.length > 0) ||
-    (props.flexWrap && props.flexWrap.length > 0) ||
-    (props.flexDirection && props.flexDirection.length > 0)
+    props.alignItems?.length > 0 ||
+    props.alignContent?.length > 0 ||
+    props.justifyItems?.length > 0 ||
+    props.justifyContent?.length > 0 ||
+    props.flexFlow?.length > 0 ||
+    props.flexWrap?.length > 0 ||
+    props.flexDirection?.length > 0
       ? "flex"
-      : "",
+      : props.display,
   alignItems: props.alignItems,
   alignContent: props.alignContent,
   justifyItems: props.justifyItems,
   justifyContent: props.justifyContent,
+  flexFlow: props.flexFlow,
   flexWrap: props.flexWrap,
   flexDirection: props.flexDirection,
   flex: props.flex,
@@ -129,5 +136,12 @@ export const flexbox = (props: any) => ({
   flexBasis: props.flexBasis,
   justifySelf: props.justifySelf,
   alignSelf: props.alignSelf,
-  order: props.order
+  order: props.order,
 });
+
+export const clamp = (props: any) => css`
+  display: -webkit-box;
+  -webkit-line-clamp: ${props.clamp};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;

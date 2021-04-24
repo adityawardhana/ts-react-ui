@@ -1,7 +1,7 @@
 import { addDecorator } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
-import GlobalStyles from "../src/Theme/GlobalStyles";
-import themes from "../src/Theme";
+import GlobalStyles from "../src/theme/GlobalStyles";
+import themes from "../src/theme";
 
 addDecorator((story) => (
   <ThemeProvider theme={themes}>

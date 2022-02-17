@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled, { css } from "styled-components";
-import { spacing, sizing, shadow } from "../../utils";
+import { spacing, sizing, shadow, position } from "../../utils";
 import { Spinner, Ripple } from "..";
 import {
   ButtonColorKeys,
@@ -21,107 +21,114 @@ export interface ButtonProps {
   link?: boolean;
 }
 
-const buttonWidth = (props: any) => ({
+const buttonWidth = (props: Pick<ButtonProps, 'shape' | 'size' | 'theme'>) => ({
   width:
     props.shape === "square" || props.shape === "circle"
-      ? props.theme.buttonSize[props.size!]["height"]
+      ? props.theme.button.size[props.size!]["height"]
       : "auto",
 });
 
 const StyledButton = css<ButtonProps>`
-  ${({ theme, color, variant, size, shape, spinner, fullWidth }) =>
-    css`
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+  ${({ theme, color, variant, size, shape, spinner, fullWidth }) => css`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
 
-      border: 1px solid transparent;
-      border-radius: ${size !== "text" && theme.buttonShape[shape!].radius};
-      border-color: ${theme.buttonColor[color!][variant!]["border"]};
+    border: 1px solid transparent;
+    border-radius: ${size !== "text" && theme.button.shape[shape!].radius};
+    border-color: ${theme.button.color[color!][variant!]["border"]};
 
-      background-color: ${theme.buttonColor[color!][variant!]["background"]};
-      color: ${theme.buttonColor[color!][variant!]["text"]};
-      padding: ${theme.buttonShape[shape!][`${size}Padding`]};
+    background-color: ${theme.button.color[color!][variant!]["background"]};
+    color: ${theme.button.color[color!][variant!]["text"]};
+    padding: ${theme.button.shape[shape!][`${size!}Padding` as const]};
 
-      height: ${theme.buttonSize[size!]["height"]};
-      ${buttonWidth};
+    height: ${theme.button.size[size!]["height"]};
+    ${buttonWidth};
 
-      font-family: inherit;
-      font-size: ${theme.buttonSize[size!]["fontSize"]};
-      font-weight: 500;
-      text-align: center;
-      vertical-align: middle;
-      white-space: nowrap;
+    font-family: inherit;
+    font-size: ${theme.button.size[size!]["fontSize"]};
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
 
-      cursor: pointer;
-      box-sizing: border-box;
-      transition: transform 0.1s ease 0s !important;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: transform 0.1s ease 0s, background 0.3s ease !important;
 
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
       &::before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
       }
+    }
 
-      &:hover {
-        &::before {
-          background: rgba(255, 255, 255, 0.1);
-        }
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      &::before {
+        background: ${size !== "text" && "rgba(50, 50, 50, 0.05)"};
+        transition: background 0.1s ease-in-out;
       }
+    }
 
-      &:focus {
-        outline: none;
+    &:active {
+      outline: none;
+      transform: scale(0.96) !important;
+      &::before {
+        background: ${size !== "text" && "rgba(50, 50, 50, 0.05)"};
+        transition: background 0.3s ease;
       }
+    }
 
-      &:active {
-        outline: none;
-        transform: scale(0.96) !important;
-        &::before {
-          background: ${size !== "text" && "rgba(50, 50, 50, 0.05)"};
-          transition: background 0.5s ease;
-        }
-      }
+    &:disabled {
+      background-color: ${theme.button.color[color!][variant!]["disabled"]};
+      border-color: ${theme.button.color[color!][variant!]["disabledBorder"]};
+      color: ${theme.button.color[color!][variant!]["disabledText"]};
+      cursor: default;
+    }
 
-      &:disabled {
-        background-color: ${theme.buttonColor[color!][variant!]["disabled"]};
-        border-color: ${theme.buttonColor[color!][variant!]["disabledBorder"]};
-        color: ${theme.buttonColor[color!][variant!]["disabledText"]};
-        cursor: default;
-      }
+    &:link,
+    &:visited,
+    &:focus {
+      text-decoration: none;
+    }
 
-      &:link,
-      &:visited,
-      &:focus {
-        text-decoration: none;
-      }
+    &[type="button"],
+    &[type="reset"],
+    &[type="submit"] {
+      -webkit-appearance: none;
+    }
 
-      &[type="button"],
-      &[type="reset"],
-      &[type="submit"] {
-        -webkit-appearance: none;
-      }
+    ${spacing};
+    ${sizing};
+    ${shadow};
+    ${position};
 
-      ${spacing};
-      ${sizing};
-      ${shadow};
-
-      ${fullWidth &&
-      css`
-        width: 100%;
-      `}
-
-      ${spinner &&
-      css`
-        text-indent: -9999px;
-        color: transparent !important;
-      `}
+    ${fullWidth &&
+    css`
+      width: 100%;
     `}
+
+    ${spinner &&
+    css`
+      text-indent: -9999px;
+      color: transparent !important;
+    `}
+  `}
 `;
 
 const ButtonDefaultStyle = styled.button<ButtonProps>`

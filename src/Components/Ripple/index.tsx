@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 export interface RippleProps {
@@ -67,10 +66,7 @@ export const Ripple: FC<RippleProps> = (props) => {
     </RippleStyle>
   );
 };
-Ripple.propTypes = {
-  duration: PropTypes.number,
-  color: PropTypes.string,
-};
+
 Ripple.defaultProps = {
   duration: 1000,
   color: "rgba(255, 255, 255, .4)",

@@ -1,16 +1,16 @@
 import { Story, Meta } from "@storybook/react";
 import { Fragment, useState } from "react";
 import { ChipsProps, Icon, Chips } from "../components";
-import { chips } from "../theme/variable";
+import { chips } from "../theme/default";
 
 export default {
   title: "Example/Chips",
   component: Chips,
   argTypes: {
-    color: {
+    activeColor: {
       control: {
         type: "radio",
-        options: Object.keys(chips.chipsColor),
+        options: Object.keys(chips.activeColor),
       },
     },
   },
@@ -28,15 +28,16 @@ const Template: Story<ChipsProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  color: "primary",
+  variant: "outline",
+  activeColor: "primary",
   shape: "rectangle",
 };
 export const Rectangle = () => {
   const [active, setActive] = useState("");
-  return Object.keys(chips.chipsColor).map((color: any, index) => (
+  return Object.keys(chips.activeColor).map((color: any, index) => (
     <Fragment key={index}>
       <Chips
-        color={color}
+        activeColor={color}
         active={active === color}
         onClick={() => setActive(color)}
         mr={4}
@@ -57,10 +58,10 @@ export const Rectangle = () => {
 };
 export const Pill = () => {
   const [active, setActive] = useState("");
-  return Object.keys(chips.chipsColor).map((color: any, index) => (
+  return Object.keys(chips.activeColor).map((color: any, index) => (
     <Fragment key={index}>
       <Chips
-        color={color}
+        activeColor={color}
         active={active === color}
         onClick={() => setActive(color)}
         mr={4}

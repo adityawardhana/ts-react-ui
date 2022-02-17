@@ -1,4 +1,3 @@
-import { FC } from "react";
 import styled from "styled-components";
 import {
   color,
@@ -11,7 +10,7 @@ import {
   shadow,
 } from "../../utils";
 
-const StyledBox = styled.div`
+export const Box = styled.div<any>`
   ${position};
   ${display};
   ${flexbox};
@@ -21,9 +20,6 @@ const StyledBox = styled.div`
   ${border};
   ${shadow};
 `;
-
-export const Box: FC<any> = (props) => {
-  return <StyledBox {...props}>{props.children}</StyledBox>;
-};
+Box.displayName = "Box";
 
 export default Box;

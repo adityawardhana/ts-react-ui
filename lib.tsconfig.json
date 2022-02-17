@@ -25,7 +25,8 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "src"
+    "src", 
+    "src/styled-components.d.ts"
   ],
   "exclude": ["src/stories", "src/App*", "src/index*", "src/*.css"]
 }

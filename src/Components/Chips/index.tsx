@@ -2,44 +2,52 @@ import { FC } from "react";
 import styled, { css } from "styled-components";
 import { spacing, sizing, shadow } from "../../utils";
 import { Ripple } from "..";
-import { ChipsColorKeys, ChipsShapeKeys } from "../../theme/types";
+import {
+  ChipsActiveColorKeys,
+  ChipsShapeKeys,
+  ChipsVariantKeys,
+} from "../../theme/types";
 
 export interface ChipsProps {
   [key: string]: any;
-  color?: ChipsColorKeys;
-  shape?: ChipsShapeKeys;
   active?: boolean;
+  variant?: ChipsVariantKeys;
+  activeColor?: ChipsActiveColorKeys;
+  shape?: ChipsShapeKeys;
   disabled?: boolean;
 }
 
 const StyledChips = styled.span<ChipsProps>`
-  ${({ theme, color, shape, disabled, active }) =>
+  ${({ theme, variant, activeColor, shape, disabled, active }) =>
     css`
       display: inline-flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      
 
       border: 1px solid transparent;
-      border-radius: ${theme.chipsShape[shape!].radius};
-      border-color: ${theme.chipsColor[color!]["border"]};
+      border-radius: ${theme.chips.shape[shape!].radius};
+      border-color: ${theme.chips.variant[variant!]["border"]};
 
-      background-color: ${theme.chipsColor[color!]["background"]};
-      color: ${theme.chipsColor[color!]["text"]};
+      background-color: ${theme.chips.variant[variant!]["background"]};
+      color: ${theme.chips.variant[variant!]["text"]};
       ${active &&
       css`
-        background-color: ${theme.chipsColor[color!]["backgroundActive"]};
-        color: ${theme.chipsColor[color!]["textActive"]};
-        border-color: ${theme.chipsColor[color!]["borderActive"]};
+        border-color: ${theme.chips.activeColor[activeColor!][variant!][
+          "border"
+        ]};
+        background-color: ${theme.chips.activeColor[activeColor!][variant!][
+          "background"
+        ]};
+        color: ${theme.chips.activeColor[activeColor!][variant!]["text"]};
       `}
 
-      padding: ${theme.chipsSize["padding"]};
-      height: ${theme.chipsSize["height"]};
+      padding: ${theme.chips.size["padding"]};
+      height: ${theme.chips.size["height"]};
       font-family: inherit;
-      font-size: ${theme.chipsSize["fontSize"]};
-      line-height: ${theme.chipsSize["lineHeight"]};
+      font-size: ${theme.chips.size["fontSize"]};
+      line-height: ${theme.chips.size["lineHeight"]};
       font-weight: 500;
       text-align: center;
       vertical-align: middle;
@@ -79,9 +87,15 @@ const StyledChips = styled.span<ChipsProps>`
 
       ${disabled &&
       css`
-        background-color: ${theme.chipsColor[color!]["disabled"]};
-        border-color: ${theme.chipsColor[color!]["disabledBorder"]};
-        color: ${theme.chipsColor[color!]["disabledText"]};
+        background-color: ${theme.chips.activeColor[activeColor!][variant!][
+          "disabled"
+        ]};
+        border-color: ${theme.chips.activeColor[activeColor!][variant!][
+          "disabledBorder"
+        ]};
+        color: ${theme.chips.activeColor[activeColor!][variant!][
+          "disabledText"
+        ]};
         cursor: default;
       `}
 
@@ -101,7 +115,8 @@ export const Chips: FC<ChipsProps> = ({ children, ...props }) => {
 };
 
 Chips.defaultProps = {
-  color: "primary",
+  variant: "outline",
+  activeColor: "primary",
   shape: "rectangle",
 };
 

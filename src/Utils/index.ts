@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import { BreakpointKeys, ThemeObjectProps } from "../theme/types";
 
 const getThemeColor = (colors: any, value: any) => {
   return Object.keys(colors).indexOf(value) > -1 ? colors[value] : value;
@@ -139,9 +140,34 @@ export const flexbox = (props: any) => ({
   order: props.order,
 });
 
-export const clamp = (props: any) => css`
-  display: -webkit-box;
-  -webkit-line-clamp: ${props.clamp};
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
+export const clamp = (props: any) =>
+  props.clamp &&
+  css`
+    display: -webkit-box;
+    -webkit-line-clamp: ${props.clamp};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  `;
+
+const resolveMedia = (props: Record<"theme", ThemeObjectProps>) => {
+  const conf = props.theme.grid;
+  const media = (Object.keys(conf.breakpoint) as Array<BreakpointKeys>).reduce(
+    (acc: any, breakpoint) => {
+      const breakpointWidth = conf.breakpoint[breakpoint];
+      acc[breakpoint] = `${
+        conf.mediaQuery ? `${conf.mediaQuery} and ` : ""
+      }(min-width: ${breakpointWidth}em)`;
+      return acc;
+    },
+    {}
+  );
+
+  return { ...conf, media };
+};
+
+export const BREAKPOINT_NAME = ["xs", "sm", "md", "lg"];
+
+export const getMedia = (props: Record<"theme", ThemeObjectProps>): any => {
+  const conf = resolveMedia(props);
+  return conf;
+};

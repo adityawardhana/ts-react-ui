@@ -1,18 +1,23 @@
-import { button, chips, colors, icon } from './variable'
-export type ThemeKeysProps = string | number | {};
+import defaultTheme from ".";
 
-export interface ThemeObjectProps {
-  [key: string]: ThemeKeysProps;
-}
+export type ThemeKeysProps = {} | string | number;
+export type ThemeTypeProps = "default" | "dark";
+export type ThemeObjectProps = typeof defaultTheme
 
-export type ColorKeys = keyof typeof colors.color
+export type ColorKeys = keyof typeof defaultTheme.color;
+export type BreakpointKeys = keyof typeof defaultTheme.grid.breakpoint
 
-export type ButtonColorKeys = keyof typeof button.buttonColor
-export type ButtonVariantKeys = keyof typeof button.buttonColor.primary
-export type ButtonSizeKeys = keyof typeof button.buttonSize
-export type ButtonShapeKeys = keyof typeof button.buttonShape
+export type ButtonColorKeys = keyof typeof defaultTheme.button.color;
+export type ButtonVariantKeys = keyof typeof defaultTheme.button.color.primary;
+export type ButtonSizeKeys = keyof typeof defaultTheme.button.size;
+export type ButtonShapeKeys = keyof typeof defaultTheme.button.shape;
 
-export type ChipsColorKeys = keyof typeof chips.chipsColor
-export type ChipsShapeKeys = keyof typeof chips.chipsShape
+export type BadgeColorKeys = keyof typeof defaultTheme.badge.color;
+export type BadgeVariantKeys = keyof typeof defaultTheme.badge.color.primary;
+export type BadgeShapeKeys = keyof typeof defaultTheme.badge.shape;
 
-export type IconSizeKeys = keyof typeof icon.iconSize
+export type ChipsActiveColorKeys = keyof typeof defaultTheme.chips.activeColor;
+export type ChipsVariantKeys = keyof typeof defaultTheme.chips.variant;
+export type ChipsShapeKeys = keyof typeof defaultTheme.chips.shape;
+
+export type IconSizeKeys = keyof typeof defaultTheme.icon.size;

@@ -11,13 +11,13 @@ export interface IconProps {
   color?: ColorKeys;
 }
 
-const StyledIcon = styled.i<Omit<IconProps, "icon">>`
+const StyledIcon = styled.i<Pick<IconProps, "size" | "color">>`
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => props.theme.iconSize[props.size!]};
-  height: ${(props) => props.theme.iconSize[props.size!]};
+  width: ${(props) => props.theme.icon.size[props.size!]};
+  height: ${(props) => props.theme.icon.size[props.size!]};
   pointer-events: none;
 
   &[type="button"] & {
@@ -25,8 +25,8 @@ const StyledIcon = styled.i<Omit<IconProps, "icon">>`
   }
 
   svg {
-    width: ${(props) => props.theme.iconSize[props.size!]};
-    height: ${(props) => props.theme.iconSize[props.size!]};
+    width: ${(props) => props.theme.icon.size[props.size!]};
+    height: ${(props) => props.theme.icon.size[props.size!]};
     fill: ${(props) => props.theme.color[props.color!] || props.color};
   }
 

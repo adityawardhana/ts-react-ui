@@ -1,7 +1,9 @@
 import { useState, useEffect, FC } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { shadow, sizing, spacing } from "../../utils";
-import { Ripple, Text, Box } from "../index";
+import Button from "../Button";
+import Icon from "../Icon";
+import { Text, Box } from "../index";
 
 type AlertStatusProps = {
   success?: any;
@@ -108,7 +110,7 @@ export interface AlertBoxProps {
   timeout?: number;
   clamp?: number;
   onTimeout?: () => void;
-  toggle?: () => void;
+  onClose?: () => void;
 }
 
 const StyledAlertBox = styled(Box)`
@@ -140,19 +142,6 @@ const StyledAlertBox = styled(Box)`
     > i + ${AlertHeader} {
       margin-left: 8px;
     }
-
-    .close {
-      pointer: cursor;
-      color: ${theme.color[status!]};
-      position: absolute;
-      right: 0;
-      top: 0;
-      font-size: 16px;
-      line-height: 16px;
-      padding: 12px 16px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
   `}
 
   ${spacing};
@@ -165,12 +154,12 @@ export const AlertBox: FC<AlertBoxProps> = (props) => {
     children,
     title,
     status,
-    toggle,
     isOpen,
     duration,
     animate,
     timeout,
     clamp,
+    onClose,
     onTimeout,
     ...innerProps
   } = props;
@@ -212,7 +201,7 @@ export const AlertBox: FC<AlertBoxProps> = (props) => {
     >
       {title && (
         <AlertHeader
-          type="H16"
+          type="H14"
           status={status}
           mb={8}
           clamp={1}
@@ -225,11 +214,19 @@ export const AlertBox: FC<AlertBoxProps> = (props) => {
         {children}
       </AlertBody>
 
-      {toggle && (
-        <button onClick={toggle} aria-label="Close" className="close">
-          <Ripple />
-          <span aria-hidden="true">&times;</span>
-        </button>
+      {onClose && (
+        <Button
+          onClick={onClose}
+          aria-label="Close"
+          variant="flat"
+          shape="circle"
+          size="small"
+          position="absolute"
+          right={4}
+          top={4}
+        >
+          <Icon icon="XIcon" color={status} />
+        </Button>
       )}
     </StyledAlertBox>
   );

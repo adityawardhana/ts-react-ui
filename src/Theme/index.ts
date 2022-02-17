@@ -1,23 +1,8 @@
 import GlobalStyles from "./GlobalStyles";
-import { ThemeObjectProps } from "./types";
-import * as themeBase from "./variable";
+import { createTheme } from "./helper";
+import ThemeProvider from "./ThemeProvider";
+import * as defaultTheme from "./default";
+import * as darkTheme from "./dark";
 
-const theme: ThemeObjectProps = {
-  ...themeBase.colors,
-  ...themeBase.button,
-  ...themeBase.chips,
-  ...themeBase.border,
-  ...themeBase.icon,
-  ...themeBase.zindex,
-  ...themeBase.formControl,
-  ...themeBase.inputControl,
-  ...themeBase.tooltip,
-  ...themeBase.shadow,
-  ...themeBase.popover,
-  ...themeBase.varText,
-  ...themeBase.breakpoints,
-  ...themeBase.progressTracker,
-};
-
-export { GlobalStyles };
-export default theme;
+export { GlobalStyles, ThemeProvider, createTheme, defaultTheme, darkTheme };
+export default defaultTheme;

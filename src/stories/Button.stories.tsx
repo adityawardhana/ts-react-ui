@@ -53,7 +53,7 @@ export const ButtonWithIcon = () => {
       <Box mb={8}>
         <Button color="secondary">
           Button With Icon
-          <Icon icon="ChevronRightIcon" color="white" mr={2} />
+          <Icon icon="ChevronRightIcon" color="white" ml={2} />
         </Button>
         <Button color="secondary" shape="pill">
           Button Without Icon
@@ -83,7 +83,7 @@ export const ButtonWithIcon = () => {
       <Box mb={8}>
         <Button color="secondary" variant="flat">
           Button With Icon
-          <Icon icon="ChevronRightIcon" color="secondary" mr={2} />
+          <Icon icon="ChevronRightIcon" color="secondary" ml={2} />
         </Button>
         <Button color="secondary" variant="flat" shape="pill">
           Button Without Icon

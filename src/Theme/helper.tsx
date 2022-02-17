@@ -1,5 +1,5 @@
 import merge from "deepmerge";
-import { darkTheme, defaultTheme } from ".";
+import { defaultTheme } from ".";
 import { ThemeObjectProps, ThemeTypeProps } from "./types";
 
 export const getTheme = (theme: ThemeTypeProps = "default") => {

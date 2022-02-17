@@ -57,6 +57,7 @@ const badgePosition = (props: any) => {
       }
     `;
   }
+  return css``
 };
 
 const StyledBadge = css<BadgeProps>`
